@@ -6,7 +6,7 @@ const router = Router();
 
 router.post("/login", kitchenController.sendKitchenOTP);
 router.post("/login/verify", kitchenController.verifyKitchenOTP);
-router.post("/login-without-opt", kitchenController.loginSignupToken);
+router.post("/login-without-otp", kitchenController.loginSignupToken);
 router.put("/update-profile/:kitchenId", auth, kitchenController.updateKitchenProfile);
 
 export default router;

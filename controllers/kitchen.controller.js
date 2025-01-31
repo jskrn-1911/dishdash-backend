@@ -9,7 +9,7 @@ dotenv.config();
 const sendKitchenOTP = async (req, res) => {
     const { phoneNumber } = req.body;
     if (!phoneNumber) {
-        res.status(400).json({ message: "phone number is required" });
+        return res.status(400).json({ message: "phone number is required" });
     }
 
     try {
@@ -26,7 +26,7 @@ const sendKitchenOTP = async (req, res) => {
 const verifyKitchenOTP = async (req, res) => {
     const { phoneNumber, otp } = req.body;
     if (!phoneNumber || !otp) {
-        res.status(400).json({ message: "phone number and OTP are required" });
+        return res.status(400).json({ message: "phone number and OTP are required" });
     }
 
     try {
@@ -78,7 +78,11 @@ const verifyKitchenOTP = async (req, res) => {
 
 const loginSignupToken = async (req, res) => {
     const { phoneNumber } = req.body;
-    // console.log("working!")    
+    console.log(req.body)
+    console.log("working!",  phoneNumber);
+    if (!phoneNumber) {
+        return res.status(400).json({ message: "phone number is required" });
+    }
     try {
         let kitchen = await Kitchen.findOne({ phoneNumber });
         if (kitchen) {
