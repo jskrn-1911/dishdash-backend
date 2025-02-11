@@ -17,7 +17,7 @@ const kitchenSchema = new mongoose.Schema({
     country: { type: String, default: 'India' },
   },
 
-  profilePhoto: { type: String }, 
+  kitchenProfilePhoto: { type: String }, 
   kitchenImages: [{ type: String }], 
   slogan: { type: String }, 
   description: { type: String },

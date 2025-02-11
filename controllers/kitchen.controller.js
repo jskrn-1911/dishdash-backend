@@ -79,7 +79,7 @@ const verifyKitchenOTP = async (req, res) => {
 const loginSignupToken = async (req, res) => {
     const { phoneNumber } = req.body;
     console.log(req.body)
-    console.log("working!",  phoneNumber);
+    console.log("working!", phoneNumber);
     if (!phoneNumber) {
         return res.status(400).json({ message: "phone number is required" });
     }
@@ -130,9 +130,9 @@ const loginSignupToken = async (req, res) => {
     }
 };
 
-const getKitchenDetails = async (req, res) => {
-    const { phoneNumber } = req.body;
-
+const getKitchenData = async (req, res) => {
+    const { phoneNumber } = req.query;
+    // console.log(req.query)
     try {
         const kitchen = await Kitchen.findOne({ phoneNumber });
 
@@ -159,10 +159,11 @@ const getKitchenDetails = async (req, res) => {
 }
 
 const updateKitchenProfile = async (req, res) => {
-    const { phoneNumber } = req.body;
+    const { phoneNumber } = req.query;
+    console.log(req.query, req.body)
     try {
         const kitchenToUpdate = await Kitchen.findOne({ phoneNumber });
-        if (!userToUpdate) {
+        if (!kitchenToUpdate) {
             return res.status(422).json({
                 message: `kitchen not found with phone number ${phoneNumber} to update details`
             })
@@ -206,6 +207,6 @@ export default {
     sendKitchenOTP,
     verifyKitchenOTP,
     loginSignupToken,
-    getKitchenDetails,
+    getKitchenData,
     updateKitchenProfile,
 }
