@@ -160,7 +160,7 @@ const getKitchenData = async (req, res) => {
 
 const updateKitchenProfile = async (req, res) => {
     const { phoneNumber } = req.query;
-    console.log(req.query, req.body)
+    console.log(req.files)
     try {
         const kitchenToUpdate = await Kitchen.findOne({ phoneNumber });
         if (!kitchenToUpdate) {
@@ -172,7 +172,7 @@ const updateKitchenProfile = async (req, res) => {
         const files = req.files;
 
         if (files?.kitchenProfilePhoto) {
-            kitchenToUpdate.profilePhoto = await uploadToCloudinary(files.kitchenProfilePhoto[0], "kitchenProfilePhotos");
+            kitchenToUpdate.kitchenProfilePhoto = await uploadToCloudinary(files.kitchenProfilePhoto[0], "kitchenProfilePhotos");
         }
 
         if (files?.kitchenImages) {

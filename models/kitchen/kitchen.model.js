@@ -34,6 +34,10 @@ const kitchenSchema = new mongoose.Schema({
   },
   isNewKitchen: { type: Boolean },
   socketId: { type: String, required: false },
+
+  rating: { type: Number, default: 0 }, 
+  totalOrders: { type: Number, default: 0 }, 
+
   menus: [
     {
       type: mongoose.Schema.Types.ObjectId,
