@@ -10,5 +10,7 @@ router.post("/login/verify", kitchenController.verifyKitchenOTP);
 router.post("/login-without-otp", kitchenController.loginSignupToken);
 router.get("/get-kitchen-data", auth,kitchenController.getKitchenData)
 router.put("/update-profile", auth, upload, kitchenController.updateKitchenProfile);
+router.delete("/delete-profile-picture", auth, kitchenController.deleteKitchenProfilePhoto);
+router.delete("/delete-kitchen-image", auth, kitchenController.deleteKitchenImage);
 
 export default router;

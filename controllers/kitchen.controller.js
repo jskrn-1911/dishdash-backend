@@ -202,11 +202,65 @@ const updateKitchenProfile = async (req, res) => {
     }
 };
 
+const deleteKitchenProfilePhoto = async (req, res) => {
+    const { phoneNumber } = req.query;
+    try {
 
+        if (!phoneNumber) {
+            return res.status(400).json({ message: "Phone number is required" });
+        }
+
+        const kitchen = await Kitchen.findOne({ phoneNumber });
+
+        if (!kitchen) {
+            return res.status(404).json({ message: "Kitchen not found" });
+        }
+
+        // not removed from cloudinary  will create that later on when needed 
+
+        kitchen.kitchenProfilePhoto = null; // Remove the profile image
+        await kitchen.save();
+
+        res.status(200).json({ message: "Profile image deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting profile image:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+const deleteKitchenImage = async (req, res) => {
+    const { phoneNumber } = req.query;
+    const { imageUrl } = req.body;
+    try {
+
+        if (!imageUrl) {
+            return res.status(400).json({ message: "Image URL is required" });
+        }
+
+        const kitchen = await Kitchen.findOneAndUpdate(
+            { phoneNumber },
+            { $pull: { kitchenImages: imageUrl } },
+            { new: true }
+        );
+
+        if (!kitchen) {
+            return res.status(404).json({ message: "Kitchen not found" });
+        }
+
+       //not deleted from cloudinary will create that functionality later
+
+        res.json({ message: "Image deleted successfully", kitchen });
+    } catch (error) {
+        console.error("Error deleting kitchen image:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}
 export default {
     sendKitchenOTP,
     verifyKitchenOTP,
     loginSignupToken,
     getKitchenData,
     updateKitchenProfile,
+    deleteKitchenProfilePhoto,
+    deleteKitchenImage,
 }
